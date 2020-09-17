@@ -9,6 +9,9 @@
 </template>
 
 <script lang="ts">
+import sun from '../assets/icons/sun.svg'
+console.log(sun)
+
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
