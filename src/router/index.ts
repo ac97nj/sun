@@ -1,11 +1,13 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import Vue from 'vue';
+import VueRouter, {RouteConfig} from 'vue-router';
 
 import Money from '@/views/Money.vue';
 import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
+import Not from '@/views/Not.vue';
 
-Vue.use(VueRouter)
+
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
@@ -27,20 +29,16 @@ const routes: Array<RouteConfig> = [
     path: '/Statistics',
     component: Statistics
   },
+  {
+    path: '*',
+    component: Not
+  },
 
 
-
-
-
-
-
-
-
-
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
-export default router
+export default router;
