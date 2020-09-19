@@ -2,10 +2,9 @@
   <div class="notes-number">
 
     <label class="notes">
-      <span class="notes-name">{{ inputValue }}</span>
+      <span class="notes-name">备注</span>
       <input placeholder="点击写备注"
-             :value="inputValue"
-             @input="inputValue = $event.target.value"
+             v-model="inputValue"
       />
     </label>
     <div class="number-wrapper">
