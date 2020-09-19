@@ -1,0 +1,31 @@
+* {
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  block-size: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button, input {
+  /*inherit,字体继承*/
+  font: inherit;
+}
+
+/*focus,去掉边框鼠标点击高亮*/
+:focus {
+  outline: none;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-weight: normal;
+}

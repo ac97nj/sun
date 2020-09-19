@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-wrapper">
+  <div class="Layout-wrapper">
     <div class="container">
       <slot></slot>
     </div>
@@ -19,15 +19,15 @@ export default class Layout extends Vue{
 </script>
 
 <style lang="scss"  scoped>
-.nav-wrapper {
-  border: 1px solid red;
+.Layout-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
   > .container {
-    border: 1px solid blue;
     flex-grow: 1;
     overflow: auto;
+    height: 100%;
+    position: relative;
   }
 }
 </style>

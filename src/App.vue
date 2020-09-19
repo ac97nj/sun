@@ -1,15 +1,19 @@
 <template>
-  <div>
+  <div id="app">
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+@import "~@/assets/style/reset.scss";
+@import "~@/assets/style/helper.scss";
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+
 
 
 </style>
