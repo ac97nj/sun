@@ -1,6 +1,5 @@
 <template>
   <div class="notes-number">
-
     <label class="notes">
       <span class="notes-name">备注</span>
       <input placeholder="点击写备注"
@@ -74,6 +73,7 @@ export default class NotesNumber extends Vue {
 
   onInputText(event: KeyboardEvent) {
     const eventText = event.target as HTMLInputElement;
+    // event.target属于HTMLInputElement类型
     this.inputValue = eventText.value;
   }
 

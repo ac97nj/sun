@@ -1,11 +1,24 @@
 <template>
   <ul class="tags">
-    <li class="tag-one" v-for="icon in  icons" :key="icon.index">
-      <div class="tag-icon">
+    <li class="tag-one"
+        v-for="(icon,index) in dataIcon"
+        :key="index"
+        @click="control(icon)"
+    >
+      <div class="tag-icon"  :class="{ selected: tagData.indexOf(icon)>=0 && 'selected' }">
         <Icon :name="icon.name"></Icon>
       </div>
       <div class="tag-text">
         {{ icon.text }}
+      </div>
+    </li>
+    <li class="tag-one" @click="addTags">
+
+      <div class="tag-icon">
+        <Icon name="zengjia"></Icon>
+      </div>
+      <div class="tag-text">
+        增加
       </div>
     </li>
   </ul>
@@ -13,35 +26,31 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
-
+type icondata = [{ name: string; text: string; type: string }]
 @Component
-export default class Tags extends Vue {
+export default class Tag extends Vue {
+  @Prop(Array) dataIcon: icondata | undefined;
+  tagData: icondata = [{name: '', text: '', type: ''}];
 
-  icons = [
-    {type: '-', name: 'zaocan', text: '早餐'},
-    {type: '-', name: 'zhusu', text: '住宿'},
-    {type: '-', name: 'yifu', text: '衣服'},
-    {type: '+', name: 'gongzi', text: '鞋子'},
-    {type: '-', name: 'zaocan', text: '早餐'},
-    {type: '-', name: 'zhusu', text: '住宿'},
-    {type: '-', name: 'yifu', text: '衣服'},
-    {type: '+', name: 'gongzi', text: '鞋子'},
-    {type: '-', name: 'zaocan', text: '早餐'},
-    {type: '-', name: 'zhusu', text: '住宿'},
-    {type: '-', name: 'yifu', text: '衣服'},
-    {type: '+', name: 'gongzi', text: '鞋子'},
-    {type: '-', name: 'zaocan', text: '早餐'},
-    {type: '-', name: 'zhusu', text: '住宿'},
-    {type: '-', name: 'yifu', text: '衣服'},
-    {type: '+', name: 'gongzi', text: '鞋子'},
-    {type: '-', name: 'zaocan', text: '早餐'},
-    {type: '-', name: 'zhusu', text: '住宿'},
-    {type: '-', name: 'yifu', text: '衣服'},
-    {type: '+', name: 'gongzi', text: '鞋子'},
 
-  ];
+  control(value: { name: string; text: string; type: string }) {
+
+    //没有理解?????????
+    const index = this.tagData.indexOf(value);
+    if (this.tagData.indexOf(value) >= 0) {
+      this.tagData.splice(index, 1);
+    } else {
+      this.tagData.push(value);
+      //  记住这里面已经有一个为 1 的数字了
+      console.log(this.tagData);
+    }
+  }
+
+  addTags() {
+    this.$router.push('/AddTag')
+  }
 
 
 }
@@ -58,7 +67,7 @@ export default class Tags extends Vue {
   width: 80%;
   flex-wrap: wrap;
   padding: 10px;
-  height: 47%;
+  height: 54%;
   overflow: auto;
 
   > li {
@@ -69,6 +78,7 @@ export default class Tags extends Vue {
     margin-top: 3%;
     align-items: center;
 
+
     > .tag-icon {
       background: #F0F1F2;
       border-radius: 50%;
@@ -77,6 +87,9 @@ export default class Tags extends Vue {
       display: flex;
       justify-content: center;
       align-items: center;
+      &.selected {
+        background: #FF931D;
+      }
 
       > .icon {
         font-size: 30px;
