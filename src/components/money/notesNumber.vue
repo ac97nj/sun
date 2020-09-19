@@ -10,15 +10,15 @@
         <button @click="buttonText">1</button>
         <button @click="buttonText">2</button>
         <button @click="buttonText">3</button>
-        <button>删除</button>
+        <button @click="remove">删除</button>
         <button @click="buttonText">4</button>
         <button @click="buttonText">5</button>
         <button @click="buttonText">6</button>
-        <button @click="buttonText">清空</button>
+        <button @click="empty">清空</button>
         <button @click="buttonText">7</button>
         <button @click="buttonText">8</button>
         <button @click="buttonText">9</button>
-        <button class="ok">完成</button>
+        <button class="ok" @click="ok">完成</button>
         <button class="zero" @click="buttonText">0</button>
         <button @click="buttonText">.</button>
       </div>
@@ -32,13 +32,41 @@ import {Component} from 'vue-property-decorator';
 
 @Component
 export default class NotesNumber extends Vue {
-  output = '';
+  output = '0';
 
   buttonText(event: MouseEvent) {
     const events = event.target as HTMLButtonElement;
-    console.log(events.textContent);
-    this.output = events.textContent + this.output
+    const textInput = events.textContent as string;
+
+    if (this.output === '0') {
+      if ('0123456789'.indexOf(textInput) >= 0) {
+        this.output = textInput;
+      }
+      return;
+    }
+
+    if (this.output.indexOf('.') >= 0) {
+      if (textInput === '.') {
+        return;
+      }
+    }
+    this.output = this.output + events.textContent;
   }
+
+  remove() {
+    if (this.output.length !== 1) {
+      this.output = this.output.slice(0, -1);
+    } else {
+      this.output = '0';
+    }
+  }
+
+  empty() {
+    this.output = '0';
+  }
+
+
+
 
 }
 
