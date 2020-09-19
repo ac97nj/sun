@@ -1,8 +1,12 @@
 <template>
   <div class="notes-number">
+
     <label class="notes">
-      <span class="notes-name">备注</span>
-      <input placeholder="点击写备注"/>
+      <span class="notes-name">{{ inputValue }}</span>
+      <input placeholder="点击写备注"
+             :value="inputValue"
+             @input="inputValue = $event.target.value"
+      />
     </label>
     <div class="number-wrapper">
       <div class="number-show">{{ output }}</div>
@@ -34,17 +38,17 @@ import {Component} from 'vue-property-decorator';
 export default class NotesNumber extends Vue {
   output = '0';
 
+  inputValue = '';
+
   buttonText(event: MouseEvent) {
     const events = event.target as HTMLButtonElement;
     const textInput = events.textContent as string;
-
     if (this.output === '0') {
       if ('0123456789'.indexOf(textInput) >= 0) {
         this.output = textInput;
       }
       return;
     }
-
     if (this.output.indexOf('.') >= 0) {
       if (textInput === '.') {
         return;
@@ -65,8 +69,14 @@ export default class NotesNumber extends Vue {
     this.output = '0';
   }
 
+  ok() {
+    console.log('ok');
+  }
 
-
+  onInputText(event: KeyboardEvent) {
+    const eventText = event.target as HTMLInputElement;
+    this.inputValue = eventText.value;
+  }
 
 }
 
