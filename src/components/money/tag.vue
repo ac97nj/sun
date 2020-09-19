@@ -1,11 +1,11 @@
 <template>
   <ul class="tags">
-    <li class="tag-one">
+    <li class="tag-one" v-for="icon in  icons" :key="icon.index">
       <div class="tag-icon">
-        <Icon name="zaocan"></Icon>
+        <Icon :name="icon.name" ></Icon>
       </div>
       <div class="tag-text">
-        早餐
+        {{ icon.text }}
       </div>
     </li>
   </ul>
@@ -20,10 +20,10 @@ import {Component} from 'vue-property-decorator';
 export default class Tags extends Vue {
 
   icons = [
-    {type: '-', name: 'zaocn', text: '早餐'},
-    {type: '-', name: 'zaocn', text: '早餐'},
-    {type: '-', name: 'zaocn', text: '早餐'},
-
+    {type: '-', name: 'zaocan', text: '早餐'},
+    {type: '-', name: 'zhusu', text: '住宿'},
+    {type: '-', name: 'yifu', text: '衣服'},
+    {type: '+', name: 'gongzi', text: '鞋子'},
   ];
 
 
