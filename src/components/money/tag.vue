@@ -2,7 +2,7 @@
   <ul class="tags">
     <li class="tag-one" v-for="icon in  icons" :key="icon.index">
       <div class="tag-icon">
-        <Icon :name="icon.name" ></Icon>
+        <Icon :name="icon.name"></Icon>
       </div>
       <div class="tag-text">
         {{ icon.text }}
@@ -24,6 +24,23 @@ export default class Tags extends Vue {
     {type: '-', name: 'zhusu', text: '住宿'},
     {type: '-', name: 'yifu', text: '衣服'},
     {type: '+', name: 'gongzi', text: '鞋子'},
+    {type: '-', name: 'zaocan', text: '早餐'},
+    {type: '-', name: 'zhusu', text: '住宿'},
+    {type: '-', name: 'yifu', text: '衣服'},
+    {type: '+', name: 'gongzi', text: '鞋子'},
+    {type: '-', name: 'zaocan', text: '早餐'},
+    {type: '-', name: 'zhusu', text: '住宿'},
+    {type: '-', name: 'yifu', text: '衣服'},
+    {type: '+', name: 'gongzi', text: '鞋子'},
+    {type: '-', name: 'zaocan', text: '早餐'},
+    {type: '-', name: 'zhusu', text: '住宿'},
+    {type: '-', name: 'yifu', text: '衣服'},
+    {type: '+', name: 'gongzi', text: '鞋子'},
+    {type: '-', name: 'zaocan', text: '早餐'},
+    {type: '-', name: 'zhusu', text: '住宿'},
+    {type: '-', name: 'yifu', text: '衣服'},
+    {type: '+', name: 'gongzi', text: '鞋子'},
+
   ];
 
 
