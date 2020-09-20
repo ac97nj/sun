@@ -86,9 +86,9 @@ export default class NotesNumber extends Vue {
 @import "~@/assets/style/helper.scss";
 
 .notes-number {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  //position: absolute;
+  //bottom: 0;
+  //width: 100%;
 
 
   > .notes {

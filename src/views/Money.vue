@@ -1,8 +1,5 @@
 <template>
   <Layout>
-    <!--    <Type/>-->
-    <!--    <Tags data-icon="dataIcon"/>-->
-    <!--    <NotesNumber/>-->
     <Type/>
     <Tag :data-icon="dataIcon"/>
     <NotesNumber/>
@@ -11,42 +8,6 @@
 
 <script lang="js">
 
-
-// import Vue from 'vue';
-// import {Component} from 'vue-property-decorator';
-// import Type from '@/components/money/type.vue';
-// import Tags from '@/components/money/tag.vue';
-// import NotesNumber from '@/components/money/notesNumber.vue';
-//
-// @Component({
-//   components: {NotesNumber, Tags, Type}
-// })
-// export default class Money extends Vue {
-//   dataIcon = [
-//     {type: '-', name: 'zaocan', text: '早餐'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//     {type: '-', name: 'zaocan', text: '早餐'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//     {type: '-', name: 'zaocan', text: '早餐'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//     {type: '-', name: 'zhusu', text: '住宿'},
-//     {type: '-', name: 'yifu', text: '衣服'},
-//     {type: '+', name: 'gongzi', text: '鞋子'},
-//   ];
-//
-// }
 
 import Type from "@/components/money/type.vue";
 import Tag from "@/components/money/tag.vue";
@@ -59,18 +20,24 @@ export default {
   data() {
     return {
       dataIcon: [
-        {type: "-", name: "zhusu", text: "住宿"},
-        {type: "-", name: "yifu", text: "衣服"},
-        {type: "+", name: "gongzi", text: "鞋子"},
-        {type: "-", name: "zhusu", text: "住宿"},
-        {type: "-", name: "yifu", text: "衣服"},
-        {type: "+", name: "gongzi", text: "鞋子"},
-        {type: "-", name: "zhusu", text: "住宿"},
-        {type: "-", name: "yifu", text: "衣服"},
-        {type: "+", name: "gongzi", text: "鞋子"}
+        {name: "gongzi", text: "工资"},
+        {name: "jiangjin", text: "奖金"},
+        {name: "jiaotong", text: "交通"},
+        {name: "lijing", text: "礼金"},
+        {name: "meirong", text: "美容"},
+        {name: "riyong", text: "日用"},
+        {name: "shiwu", text: "食物"},
+        {name: "yifu", text: "衣服"},
+        {name: "zaocan", text: "早餐"},
+        {name: "zhusu", text: "住宿"},
+        {name: "gupiao", text: "股票"},
+        {name: "shuiguo", text: "水果"},
+        {name: "xiezi", text: "鞋子"},
       ]
     };
   },
+
+
 
 };
 

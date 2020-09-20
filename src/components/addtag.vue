@@ -12,18 +12,20 @@
           收入
         </li>
       </ul>
-      <router-link to="" class="add-sort">
+      <router-link to="" class="add-sort" @click.native="addCategory">
         <Icon name="wancheng"></Icon>
       </router-link>
 
     </nav>
 
     <div class="add-one">
-      <div class="add-tag" :class="{selected : addTag.length ===1 && 'selected'}">
-        <Icon :name=" addTag[0]"></Icon>
+      <div class="add-tag" :class="{selected : addTagName.length ===1 && 'selected'}">
+        <Icon :name=" addTagName[0]"></Icon>
       </div>
       <label class="add-input">
-        <input placeholder="请最多输入 4 个字"/>
+        <input placeholder="超过 4 个字就不好看了,亲"
+               v-model="inputvalue"
+        />
       </label>
       <hr class="hr"/>
     </div>
@@ -33,10 +35,9 @@
           @click="control(item)"
       >
 
-        <div class="add-icon" :class="{ selected : addData.indexOf(item)>=0 && 'selected' }">
+        <div class="add-icon" :class="{ selected : addTagName.indexOf(item.name) >=0 && 'selected' }">
           <Icon :name="item.name"></Icon>
         </div>
-
 
       </li>
     </ul>
@@ -45,16 +46,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
-type icondata = [{ name: string }]
-
+type icondata = [{ name: string; text: string; type: string }]
 
 @Component
 export default class AddTag extends Vue {
-  type = '-';
-  addData: icondata = [{name: ''}];
-  addTag: string[] = [];
+  @Prop(Array) dataIcon: icondata | undefined;
+
+  type = '-';  // 储存 svg 的 - / +
+  addTagName: string[] = [];    //储存 svg 的 name
+  inputvalue = '';   //储存 svg 的 text
+
 
   addlabels = [
     {name: 'dangao'},
@@ -80,25 +83,31 @@ export default class AddTag extends Vue {
   }
 
   control(item: { name: string }) {
-    this.addData.push(item);
-    this.addTag.push(item.name);
-
-    if (this.addData.length > 2) {
-      const CC = this.addData.indexOf(item);
-      this.addData.splice(CC - 1, 1);
+    this.addTagName.push(item.name);
+    if (this.addTagName.length === 1) {
+      return this.addTagName;
     } else {
-      console.log('没有删除上一个');
-    }
-
-
-    if (this.addTag.length === 1) {
-      return this.addTag;
-    } else {
-      const DD = this.addTag.indexOf(item.name);
-      this.addTag.splice(DD - 1, 1);
-      return this.addTag;
+      const DD = this.addTagName.indexOf(item.name);
+      this.addTagName.splice(DD - 1, 1);
+      return this.addTagName;
     }
   }
+
+
+  addCategory() {
+
+
+
+    if (this.dataIcon) {
+      // this.$emit('update:dataIcon', [...this.dataIcon, {name: this.addTagName, text: this.inputvalue}]);
+
+      this.$emit('update:dataIcon',{name: this.addTagName, text: this.inputvalue})
+
+    }
+
+  }
+
+
 }
 
 
@@ -179,6 +188,7 @@ export default class AddTag extends Vue {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 10px;
 
     > input {
       border: none;

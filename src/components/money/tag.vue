@@ -3,9 +3,9 @@
     <li class="tag-one"
         v-for="(icon,index) in dataIcon"
         :key="index"
-        @click="control(icon)"
+        @click="controls(icon)"
     >
-      <div class="tag-icon" :class="{ selected: tagData.indexOf(icon)>=0 && 'selected' }">
+      <div class="tag-icon" :class="{ selected: tagDataName.indexOf(icon.name)>=0 && 'selected' }">
         <Icon :name="icon.name"></Icon>
       </div>
       <div class="tag-text">
@@ -32,19 +32,25 @@ type icondata = [{ name: string; text: string; type: string }]
 @Component
 export default class Tag extends Vue {
   @Prop(Array) dataIcon: icondata | undefined;
+
   tagData: icondata = [{name: '', text: '', type: ''}];
 
-  control(value: { name: string; text: string; type: string }) {
-    this.tagData.push(value);
-    if (this.tagData.length > 2) {
-      const CC = this.tagData.indexOf(value);
-      this.tagData.splice(CC-1, 1);
-      console.log('已经删除上一个了');
+  tagDataName: string[] = [];  // 储存 svg 的 name
+  tagDateText: string[] = [];  //  储存 svg 的 text
+
+  controls(value: { name: string; text: string; type: string }) {
+    this.tagDataName.push(value.name);
+    if (this.tagDataName.length === 1) {
+      this.tagDateText.push(value.text);
     } else {
-      console.log('没有删除上一个');
+      const CC = this.tagDataName.indexOf(value.name);
+      this.tagDataName.splice(CC - 1, 1);
+      console.log('this.tagDataName');
     }
   }
-  addTags() {
+
+
+  addTags() {     //转到增加页面
     this.$router.push('/AddTag');
   }
 
@@ -62,8 +68,10 @@ export default class Tag extends Vue {
   width: 80%;
   flex-wrap: wrap;
   padding: 10px;
-  height: 54%;
+  height: 50%;
   overflow: auto;
+
+
 
   > li {
     display: flex;
