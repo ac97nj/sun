@@ -5,7 +5,7 @@
         :key="index"
         @click="control(icon)"
     >
-      <div class="tag-icon"  :class="{ selected: tagData.indexOf(icon)>=0 && 'selected' }">
+      <div class="tag-icon" :class="{ selected: tagData.indexOf(icon)>=0 && 'selected' }">
         <Icon :name="icon.name"></Icon>
       </div>
       <div class="tag-text">
@@ -34,24 +34,19 @@ export default class Tag extends Vue {
   @Prop(Array) dataIcon: icondata | undefined;
   tagData: icondata = [{name: '', text: '', type: ''}];
 
-
   control(value: { name: string; text: string; type: string }) {
-
-    //没有理解?????????
-    const index = this.tagData.indexOf(value);
-    if (this.tagData.indexOf(value) >= 0) {
-      this.tagData.splice(index, 1);
+    this.tagData.push(value);
+    if (this.tagData.length > 2) {
+      const CC = this.tagData.indexOf(value);
+      this.tagData.splice(CC-1, 1);
+      console.log('已经删除上一个了');
     } else {
-      this.tagData.push(value);
-      //  记住这里面已经有一个为 1 的数字了
-      console.log(this.tagData);
+      console.log('没有删除上一个');
     }
   }
-
   addTags() {
-    this.$router.push('/AddTag')
+    this.$router.push('/AddTag');
   }
-
 
 }
 
@@ -87,6 +82,7 @@ export default class Tag extends Vue {
       display: flex;
       justify-content: center;
       align-items: center;
+
       &.selected {
         background: #FF931D;
       }
