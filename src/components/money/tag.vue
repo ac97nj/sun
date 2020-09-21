@@ -1,58 +1,99 @@
 <template>
-  <ul class="tags">
-    <li class="tag-one"
-        v-for="(icon,index) in dataIcon"
-        :key="index"
-        @click="controls(icon)"
-    >
-      <div class="tag-icon" :class="{ selected: tagDataName.indexOf(icon.name)>=0 && 'selected' }">
-        <Icon :name="icon.name"></Icon>
-      </div>
-      <div class="tag-text">
-        {{ icon.text }}
-      </div>
-    </li>
-    <li class="tag-one" @click="addTags">
+  <div class="tags">
+    <ul class="tags-ul">
+      <li class="tag-one"
+          v-for="(icon,index) in IconData"
+          :key="index"
+          @click="controls(icon)"
+      >
+        <div class="tag-icon" :class="{ selected: tagDataName.indexOf(icon.name)>=0 && 'selected' }">
+          <Icon :name="icon.name"></Icon>
+        </div>
+        <div class="tag-text">
+          {{ icon.text }}
+        </div>
+      </li>
+      <li class="tag-one" @click="addTags('a')">
+        <div class="tag-icon">
+          <Icon name="zengjia"></Icon>
+        </div>
+        <div class="tag-text">
+          增加
+        </div>
+      </li>
+    </ul>
 
-      <div class="tag-icon">
-        <Icon name="zengjia"></Icon>
-      </div>
-      <div class="tag-text">
-        增加
-      </div>
-    </li>
-  </ul>
+    <AddTag class="addTag" v-if="add === 'a'"  @update:add=onadd></AddTag>
+
+  </div>
+
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop,Watch} from 'vue-property-decorator';
+import AddTag from '@/components/addtag.vue';
 
-type icondata = [{ name: string; text: string; type: string }]
-@Component
+
+type icondate = [{ name: string; text: string; type: string }]
+@Component({
+  components: {AddTag}
+})
 export default class Tag extends Vue {
-  @Prop(Array) dataIcon: icondata | undefined;
 
-  tagData: icondata = [{name: '', text: '', type: ''}];
+  @Prop(Array) dataIcon: icondate | undefined;
+
+  add = 'b';
+
+  get IconData() {     //计算属性
+    return this.dataIcon;
+  }
+
 
   tagDataName: string[] = [];  // 储存 svg 的 name
-  tagDateText: string[] = [];  //  储存 svg 的 text
+  tagDateText = '';  //  储存 svg 的 text
 
   controls(value: { name: string; text: string; type: string }) {
     this.tagDataName.push(value.name);
+    this.tagDateText = value.text;
     if (this.tagDataName.length === 1) {
-      this.tagDateText.push(value.text);
+      return
     } else {
       const CC = this.tagDataName.indexOf(value.name);
       this.tagDataName.splice(CC - 1, 1);
-      console.log('this.tagDataName');
     }
   }
 
 
-  addTags() {     //转到增加页面
-    this.$router.push('/AddTag');
+
+  @Watch('tagDataName')
+  onNameChanged(value: string[]) {
+    this.$emit('update:Tag', value[0]);
   }
+
+  @Watch('tagDateText')
+  onTextChanged(value: string) {
+    this.$emit('update:text', value);
+  }
+
+
+
+
+
+
+
+
+      addTags() {     //转到增加页面
+    return this.add = 'a';
+  }
+  onadd(value: string) {    // add 增加页面的
+    return this.add = value;
+  }
+
+
+
+
+
 
 }
 
@@ -62,43 +103,58 @@ export default class Tag extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 
+
 .tags {
+  flex-direction: column;
+  width: 90%;
   margin: auto;
-  display: flex;
-  width: 80%;
-  flex-wrap: wrap;
-  padding: 10px;
-  height: 50%;
-  overflow: auto;
 
-
-
-  > li {
+  .tags-ul {
     display: flex;
-    flex-direction: column;
-    width: 22%;
-    margin-left: 2%;
-    margin-top: 3%;
-    align-items: center;
+    overflow: auto;
+    flex-wrap: wrap;
+    height: 350px;
 
-
-    > .tag-icon {
-      background: #F0F1F2;
-      border-radius: 50%;
-      width: 55px;
-      height: 55px;
+    > li {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      width: 22%;
+      margin-left: 2%;
+      margin-top: 3%;
       align-items: center;
 
-      &.selected {
-        background: #FF931D;
-      }
+      > .tag-icon {
+        background: #F0F1F2;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-      > .icon {
-        font-size: 30px;
+        &.selected {
+          background: #FF931D;
+        }
+
+        > .icon {
+          font-size: 30px;
+        }
       }
     }
   }
+
+  .addTag {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    background: white;
+    z-index: 2;
+  }
+
+
 }
+
+
 </style>

@@ -2,8 +2,8 @@
   <div class="type">
     <div class="calendar">日历</div>
     <ul class="isType">
-      <li :class="type ==='-'&& 'selected' " @click="selectType('-')">支出</li>
-      <li :class="type ==='+'&& 'selected' " @click="selectType('+')">收入</li>
+      <li :class="value ==='-'&& 'selected' " @click="selectType('-')">支出</li>
+      <li :class="value ==='+'&& 'selected' " @click="selectType('+')">收入</li>
     </ul>
     <div class="redact">删除</div>
   </div>
@@ -17,17 +17,26 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Type extends Vue {
-  @Prop(Number) readonly propA: number | undefined
+  @Prop(Number) readonly propA: number | undefined;
+  @Prop(String) value!: string;
 
 
-  type = '-';
+  // type = '-';
+
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
       throw  new Error('type');
     }
-    console.log('x');
-    this.type = type;
+    this.$emit('update:value', type);
+
   }
+
+  // @Watch('type')
+  // onTypeChanged(value: string) {
+  //   this.$emit('updata:type', value);
+  // }
+
+
 }
 
 
@@ -54,6 +63,7 @@ export default class Type extends Vue {
       justify-content: center;
       align-items: center;
       width: 60px;
+
       &.selected::after {
         margin-top: 12px;
         position: absolute;

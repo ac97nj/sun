@@ -1,11 +1,5 @@
 <template>
   <div class="notes-number">
-    <label class="notes">
-      <span class="notes-name">备注</span>
-      <input placeholder="点击写备注"
-             v-model="inputValue"
-      />
-    </label>
     <div class="number-wrapper">
       <div class="number-show">{{ output }}</div>
       <div class="number-key ">
@@ -36,7 +30,7 @@ import {Component} from 'vue-property-decorator';
 export default class NotesNumber extends Vue {
   output = '0';
 
-  inputValue = '';
+  // inputValue = '';
 
   buttonText(event: MouseEvent) {
     const events = event.target as HTMLButtonElement;
@@ -68,14 +62,17 @@ export default class NotesNumber extends Vue {
   }
 
   ok() {
-    console.log('ok');
+    if (this.output ==='0' ){
+      alert('亲,至少输入一个数字')
+    }
+    this.$emit('update:NotesNumber', this.output);
   }
 
-  onInputText(event: KeyboardEvent) {
-    const eventText = event.target as HTMLInputElement;
-    // event.target属于HTMLInputElement类型
-    this.inputValue = eventText.value;
-  }
+  // onInputText(event: KeyboardEvent) {
+  //   const eventText = event.target as HTMLInputElement;
+  //   // event.target属于HTMLInputElement类型
+  //   this.inputValue = eventText.value;
+  // }
 
 }
 
@@ -86,9 +83,9 @@ export default class NotesNumber extends Vue {
 @import "~@/assets/style/helper.scss";
 
 .notes-number {
-  //position: absolute;
-  //bottom: 0;
-  //width: 100%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 
 
   > .notes {

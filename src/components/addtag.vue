@@ -1,9 +1,9 @@
 <template>
   <div>
     <nav class="add-nav">
-      <router-link to="/Money" class="add-back ">
+      <div class="add-back " @click="add">
         <Icon name="fanhui"></Icon>
-      </router-link>
+      </div>
       <ul class="add-isType">
         <li :class="type ==='-'&& 'selected' " @click="selectType('-')">
           支出
@@ -12,10 +12,9 @@
           收入
         </li>
       </ul>
-      <router-link to="" class="add-sort" @click.native="addCategory">
+      <div class="add-sort" @click="addCategory">
         <Icon name="wancheng"></Icon>
-      </router-link>
-
+      </div>
     </nav>
 
     <div class="add-one">
@@ -34,25 +33,24 @@
       <li v-for="(item,index) in addlabels" :key="index"
           @click="control(item)"
       >
-
         <div class="add-icon" :class="{ selected : addTagName.indexOf(item.name) >=0 && 'selected' }">
           <Icon :name="item.name"></Icon>
         </div>
-
       </li>
     </ul>
+
+
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
+import bus from '@/components/money/bus.ts';
 
-type icondata = [{ name: string; text: string; type: string }]
 
 @Component
 export default class AddTag extends Vue {
-  @Prop(Array) dataIcon: icondata | undefined;
 
   type = '-';  // 储存 svg 的 - / +
   addTagName: string[] = [];    //储存 svg 的 name
@@ -78,7 +76,6 @@ export default class AddTag extends Vue {
     if (value !== '-' && value !== '+') {
       throw  new Error('type');
     }
-    console.log(value);
     this.type = value;
   }
 
@@ -95,19 +92,13 @@ export default class AddTag extends Vue {
 
 
   addCategory() {
-
-
-
-    if (this.dataIcon) {
-      // this.$emit('update:dataIcon', [...this.dataIcon, {name: this.addTagName, text: this.inputvalue}]);
-
-      this.$emit('update:dataIcon',{name: this.addTagName, text: this.inputvalue})
-
-    }
-
+    bus.$emit('update:dataIcon', {name: this.addTagName[0], text: this.inputvalue});
+    this.$emit('update:add', 'b');
   }
 
-
+  add() {
+    this.$emit('update:add', 'b');
+  }
 }
 
 
@@ -143,7 +134,13 @@ export default class AddTag extends Vue {
 
 
   > .add-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: 30px;
+    text-align: center;
+    width: 50px;
+    height: 40px;
 
     > .icon {
       font-size: 20px;
@@ -153,6 +150,13 @@ export default class AddTag extends Vue {
   > .add-sort {
     font-size: 20px;
     margin-right: 30px;
+    text-align: center;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+
   }
 }
 
