@@ -28,7 +28,6 @@ export default class Type extends Vue {
       throw  new Error('type');
     }
     this.$emit('update:value', type);
-
   }
 
   // @Watch('type')

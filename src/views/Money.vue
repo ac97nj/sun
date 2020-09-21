@@ -1,16 +1,16 @@
 <template>
   <Layout>
     <Type :value.sync=record.type></Type>
-    {{ record }}
+    {{ recordList }}
     <Tag :data-icon="dataIcon" @update:Tag=onTagName @update:text=ontext></Tag>
     <Notes @update:Notes=onNotes></Notes>
-    <NotesNumber @update:NotesNumber=onNotesAmount></NotesNumber>
+    <NotesNumber @update:NotesNumber=onNotesAmount @submit="saveRecord"></NotesNumber>
   </Layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 import Type from '@/components/money/type.vue';
 import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
@@ -24,6 +24,7 @@ type Record = {
   text: string;
   notes: string;
   amount: number;
+  createAt?: Date;
 }
 
 
@@ -49,7 +50,7 @@ export default class Money extends Vue {
   ];
 
   created() {
-    bus.$on('update:dataIcon', (obj: object) => {
+    bus.$on('update:dataIcon', (obj: { name: string; text: string }) => {
       this.dataIcon.push(obj);
     });
   }
@@ -62,6 +63,8 @@ export default class Money extends Vue {
     notes: '',
     amount: 0,
   };
+
+  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');    //localStorage 获取数据
 
 
   // onTyepe(value: string) {
@@ -83,6 +86,18 @@ export default class Money extends Vue {
 
   onNotesAmount(value: string) {
     this.record.amount = parseFloat(value);
+  }
+
+  saveRecord() {   //更新数据
+    const recordCopy: Record = JSON.parse(JSON.stringify(this.record));
+    recordCopy.createAt = new Date();
+    this.recordList.push(recordCopy);
+    console.log(this.recordList);
+  }
+
+  @Watch('recordList')   //localStorage保存数据
+  onRecordList() {
+    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 
 

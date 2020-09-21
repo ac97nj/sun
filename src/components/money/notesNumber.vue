@@ -62,17 +62,14 @@ export default class NotesNumber extends Vue {
   }
 
   ok() {
-    if (this.output ==='0' ){
-      alert('亲,至少输入一个数字')
+    if (this.output === '0') {
+      alert('亲,至少输入一个数字');
     }
     this.$emit('update:NotesNumber', this.output);
+    this.$emit('submit', this.output);
+    this.output = '0';
   }
 
-  // onInputText(event: KeyboardEvent) {
-  //   const eventText = event.target as HTMLInputElement;
-  //   // event.target属于HTMLInputElement类型
-  //   this.inputValue = eventText.value;
-  // }
 
 }
 
