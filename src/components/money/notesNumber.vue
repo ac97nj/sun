@@ -1,5 +1,11 @@
 <template>
   <div class="notes-number">
+    <label class="notes">
+      <span class="notes-name">备注</span>
+      <input placeholder="点击写备注"
+             v-model="inputValue"
+      />
+    </label>
     <div class="number-wrapper">
       <div class="number-show">{{ output }}</div>
       <div class="number-key ">
@@ -24,13 +30,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 @Component
 export default class NotesNumber extends Vue {
-  output = '0';
 
-  // inputValue = '';
+  //键盘数据
+
+  output = '0';
 
   buttonText(event: MouseEvent) {
     const events = event.target as HTMLButtonElement;
@@ -68,6 +75,15 @@ export default class NotesNumber extends Vue {
     this.$emit('update:NotesNumber', this.output);
     this.$emit('submit', this.output);
     this.output = '0';
+  }
+
+//备注数据
+
+  inputValue = '';
+
+  @Watch('inputValue')
+  onInputChanged(value: string) {
+    this.$emit('update:Notes', value);
   }
 
 

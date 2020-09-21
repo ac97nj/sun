@@ -1,10 +1,12 @@
 <template>
   <Layout>
     <Type :value.sync=record.type></Type>
-    {{ recordList }}
     <Tag :data-icon="dataIcon" @update:Tag=onTagName @update:text=ontext></Tag>
-    <Notes @update:Notes=onNotes></Notes>
-    <NotesNumber @update:NotesNumber=onNotesAmount @submit="saveRecord"></NotesNumber>
+    <NotesNumber
+        @update:NotesNumber=onNotesAmount
+        @submit="saveRecord"
+        @update:Notes=onNotes
+    ></NotesNumber>
   </Layout>
 </template>
 
@@ -66,10 +68,6 @@ export default class Money extends Vue {
 
   recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');    //localStorage 获取数据
 
-
-  // onTyepe(value: string) {
-  //   this.record.type = value;
-  // }
 
   onTagName(value: string) {
     this.record.name = value;
