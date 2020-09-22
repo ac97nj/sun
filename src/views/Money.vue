@@ -17,48 +17,24 @@ import Type from '@/components/money/type.vue';
 import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
 import Notes from '@/components/money/notes.vue';
-import bus from '@/components/money/bus.ts';
+import recordModels from '@/model/recordmodels.ts';
+import tagModel from '@/model/tagModel.ts';
 
-
-type Record = {
-  type: string;
-  name: string;
-  text: string;
-  notes: string;
-  amount: number;
-  createAt?: Date;
-}
-
-
+tagModel.getSave()
 @Component({
   components: {Type, Tag, NotesNumber, Notes,}
 })
 export default class Money extends Vue {
-  dataIcon = [
-    {name: 'gongzi', text: '工资'},
-    {name: 'jiangjin', text: '奖金'},
-    {name: 'jiaotong', text: '交通'},
-    {name: 'lijing', text: '礼金'},
-    {name: 'meirong', text: '美容'},
-    {name: 'riyong', text: '日用'},
-    {name: 'shiwu', text: '食物'},
-    {name: 'yifu', text: '衣服'},
-    {name: 'zaocan', text: '早餐'},
-    {name: 'zhusu', text: '住宿'},
-    {name: 'gupiao', text: '股票'},
-    {name: 'shuiguo', text: '水果'},
-    {name: 'xiezi', text: '鞋子'},
 
-  ];
+  dataIcon = tagModel.getSave();
 
   created() {
-    bus.$on('update:dataIcon', (obj: { name: string; text: string }) => {
-      this.dataIcon.push(obj);
-    });
+    // bus.$on('update:dataIcon', (obj: { name: string; text: string }) => {this.dataIcon.push(obj)}
+    // tagModel.readicondata()
   }
 
 
-  record: Record = {
+  record: RecordItem = {
     type: '-',
     name: '',
     text: '',
@@ -66,7 +42,9 @@ export default class Money extends Vue {
     amount: 0,
   };
 
-  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');    //localStorage 获取数据
+  recordList: RecordItem[] = recordModels.read();
+
+  //localStorage 获取数据
 
 
   onTagName(value: string) {
@@ -86,24 +64,23 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
 
-  saveRecord() {   //更新数据
-    const recordCopy: Record = JSON.parse(JSON.stringify(this.record));
+//更新数据
+  saveRecord() {
+    const recordCopy: RecordItem = recordModels.Copy(this.record);
     recordCopy.createAt = new Date();
     this.recordList.push(recordCopy);
-    console.log(this.recordList);
   }
 
-  @Watch('recordList')   //localStorage保存数据
+  //localStorage保存数据
+  @Watch('recordList')
   onRecordList() {
-    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+    recordModels.save(this.recordList);
   }
-
 
 }
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-
 
 </style>

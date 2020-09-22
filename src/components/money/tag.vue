@@ -6,32 +6,33 @@
           :key="index"
           @click="controls(icon)"
       >
-        <div class="tag-icon" :class="{ selected: tagDataName.indexOf(icon.name)>=0 && 'selected' }">
+        <div class="tag-icon" :class="{ selected: tagDateText ===  icon.text && 'selected' }">
           <Icon :name="icon.name"></Icon>
+
         </div>
         <div class="tag-text">
           {{ icon.text }}
         </div>
       </li>
-      <li class="tag-one" @click="addTags('a')">
+      <li class="tag-one" @click="addTags">
         <div class="tag-icon">
           <Icon name="zengjia"></Icon>
         </div>
-        <div class="tag-text">
+        <div   class="tag-text">
           增加
         </div>
       </li>
     </ul>
 
-    <AddTag class="addTag" v-if="add === 'a'"  @update:add=onadd></AddTag>
 
   </div>
 
 </template>
 
 <script lang="ts">
+
 import Vue from 'vue';
-import {Component, Prop,Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 import AddTag from '@/components/addtag.vue';
 
 
@@ -43,27 +44,27 @@ export default class Tag extends Vue {
 
   @Prop(Array) dataIcon: icondate | undefined;
 
-  add = 'b';
+
 
   get IconData() {     //计算属性
     return this.dataIcon;
   }
 
 
-  tagDataName: string[] = [];  // 储存 svg 的 name
-  tagDateText = '';  //  储存 svg 的 text
+  tagDataName: string[] = [];   // 储存 svg 的 name
+  tagDateText = '';            //  储存 svg 的 text
 
   controls(value: { name: string; text: string; type: string }) {
     this.tagDataName.push(value.name);
     this.tagDateText = value.text;
     if (this.tagDataName.length === 1) {
-      return
+      return;
     } else {
       const CC = this.tagDataName.indexOf(value.name);
       this.tagDataName.splice(CC - 1, 1);
+      console.log(this.tagDataName);
     }
   }
-
 
 
   @Watch('tagDataName')
@@ -77,23 +78,10 @@ export default class Tag extends Vue {
   }
 
 
-
-
-
-
-
-
-      addTags() {     //转到增加页面
-    return this.add = 'a';
+  addTags(){
+    console.log(this)
+    this.$router.push('/AddTag')
   }
-  onadd(value: string) {    // add 增加页面的
-    return this.add = value;
-  }
-
-
-
-
-
 
 }
 
@@ -113,7 +101,7 @@ export default class Tag extends Vue {
     display: flex;
     overflow: auto;
     flex-wrap: wrap;
-    height: 350px;
+    height: 400px;
 
     > li {
       display: flex;

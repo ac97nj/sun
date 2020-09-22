@@ -1,9 +1,9 @@
 <template>
   <div>
     <nav class="add-nav">
-      <div class="add-back " @click="add">
+      <router-link to="/" class="add-back ">
         <Icon name="fanhui"></Icon>
-      </div>
+      </router-link>
       <ul class="add-isType">
         <li :class="type ==='-'&& 'selected' " @click="selectType('-')">
           支出
@@ -13,7 +13,7 @@
         </li>
       </ul>
       <div class="add-sort" @click="addCategory">
-        <Icon name="wancheng"></Icon>
+        <Icon name="wancheng" ></Icon>
       </div>
     </nav>
 
@@ -23,14 +23,14 @@
       </div>
       <label class="add-input">
         <input placeholder="超过 4 个字就不好看了,亲"
-               v-model="inputvalue"
+               v-model="inputText"
         />
       </label>
       <hr class="hr"/>
     </div>
 
     <ul class="add-label">
-      <li v-for="(item,index) in addlabels" :key="index"
+      <li v-for="(item,index) in addLabels" :key="index"
           @click="control(item)"
       >
         <div class="add-icon" :class="{ selected : addTagName.indexOf(item.name) >=0 && 'selected' }">
@@ -46,18 +46,17 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import bus from '@/components/money/bus.ts';
-
+import tagModel from '@/model/tagModel.ts';
 
 @Component
 export default class AddTag extends Vue {
 
   type = '-';  // 储存 svg 的 - / +
   addTagName: string[] = [];    //储存 svg 的 name
-  inputvalue = '';   //储存 svg 的 text
+  inputText = '';   //储存 svg 的 text
 
 
-  addlabels = [
+  addLabels = [
     {name: 'dangao'},
     {name: 'fangsong'},
     {name: 'jingbi'},
@@ -92,12 +91,21 @@ export default class AddTag extends Vue {
 
 
   addCategory() {
-    bus.$emit('update:dataIcon', {name: this.addTagName[0], text: this.inputvalue});
-    this.$emit('update:add', 'b');
-  }
-
-  add() {
-    this.$emit('update:add', 'b');
+    const add: RecordItem = {type: '', name: '', text: ''};
+    add.type = this.type;
+    add.name = this.addTagName[0];
+    add.text = this.inputText;
+    if (add.text === ''){
+      return  alert('亲,名字不可为空')
+    }
+    const AA = tagModel.getSave();
+    const BB = AA.map(item => item.text);
+    if (BB.indexOf(add.text) >= 0) {
+      return alert('标签名字重复');
+    } else {
+      tagModel.addTag(add);
+      this.$router.push('/')
+    }
   }
 }
 
@@ -185,7 +193,6 @@ export default class AddTag extends Vue {
     }
 
   }
-
 
   .add-input {
     display: flex;
