@@ -5,23 +5,24 @@
       <li :class="value ==='-'&& 'selected' " @click="selectType('-')">支出</li>
       <li :class="value ==='+'&& 'selected' " @click="selectType('+')">收入</li>
     </ul>
-    <div class="redact">删除</div>
+    <div class="redact" @click="upDataIcon" v-if="!removeIcon">删除</div>
+    <div class="redact" @click="upDataIcon" v-else>完成</div>
   </div>
 </template>
 
 <script lang="ts">
 
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
-
+import {Component, Inject, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Type extends Vue {
   @Prop(Number) readonly propA: number | undefined;
   @Prop(String) value!: string;
+  @Inject() eventBus!: Vue;
 
+  removeIcon = false;
 
-  // type = '-';
 
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
@@ -30,10 +31,10 @@ export default class Type extends Vue {
     this.$emit('update:value', type);
   }
 
-  // @Watch('type')
-  // onTypeChanged(value: string) {
-  //   this.$emit('updata:type', value);
-  // }
+  upDataIcon() {
+    this.removeIcon = !this.removeIcon;
+    this.eventBus.$emit('update:removeIcon', this.removeIcon);
+  }
 
 
 }
@@ -50,6 +51,7 @@ export default class Type extends Vue {
   font-size: 18px;
   justify-content: space-between;
   align-items: center;
+
 
   > .isType {
     display: flex;
@@ -78,11 +80,21 @@ export default class Type extends Vue {
 
   .calendar {
     margin-left: 10px;
-
+    display: flex;
+    margin-right: 10px;
+    height: 40px;
+    width: 45px;
+    justify-content: center;
+    align-items: center;
   }
 
   .redact {
+    display: flex;
     margin-right: 10px;
+    height: 40px;
+    width: 45px;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

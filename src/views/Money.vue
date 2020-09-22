@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Provide, Watch} from 'vue-property-decorator';
 import Type from '@/components/money/type.vue';
 import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
@@ -20,19 +20,21 @@ import Notes from '@/components/money/notes.vue';
 import recordModels from '@/model/recordmodels.ts';
 import tagModel from '@/model/tagModel.ts';
 
-tagModel.getSave()
+
 @Component({
   components: {Type, Tag, NotesNumber, Notes,}
 })
 export default class Money extends Vue {
+  @Provide() eventBus = new Vue;
 
-  dataIcon = tagModel.getSave();
+  dataIcon: RecordItem[] = []
 
   created() {
-    // bus.$on('update:dataIcon', (obj: { name: string; text: string }) => {this.dataIcon.push(obj)}
-    // tagModel.readicondata()
+    if (this.dataIcon) {
+      tagModel.setRead();
+    }
+    this.dataIcon  = tagModel.getSave();
   }
-
 
   record: RecordItem = {
     type: '-',
@@ -42,10 +44,13 @@ export default class Money extends Vue {
     amount: 0,
   };
 
+
+
+
+
+
   recordList: RecordItem[] = recordModels.read();
-
   //localStorage 获取数据
-
 
   onTagName(value: string) {
     this.record.name = value;
@@ -76,8 +81,13 @@ export default class Money extends Vue {
   onRecordList() {
     recordModels.save(this.recordList);
   }
-
 }
+
+
+
+
+
+
 </script>
 
 <style lang="scss" scoped>

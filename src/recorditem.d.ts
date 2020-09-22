@@ -5,9 +5,10 @@ type RecordItem = {
   notes?: string;
   amount?: number;
   createAt?: Date;
+  id?: number;
 }
 
-type  dataIconType =  [{
+type  dataIconType = [{
   type: string;
   name: string;
   text: string;

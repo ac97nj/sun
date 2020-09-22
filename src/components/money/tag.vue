@@ -8,7 +8,11 @@
       >
         <div class="tag-icon" :class="{ selected: tagDateText ===  icon.text && 'selected' }">
           <Icon :name="icon.name"></Icon>
-
+          <Icon
+              name="shanchu"
+              class="deleteIcon"
+              v-if="removeIcon"
+          ></Icon>
         </div>
         <div class="tag-text">
           {{ icon.text }}
@@ -18,7 +22,7 @@
         <div class="tag-icon">
           <Icon name="zengjia"></Icon>
         </div>
-        <div   class="tag-text">
+        <div class="tag-text">
           增加
         </div>
       </li>
@@ -32,7 +36,7 @@
 <script lang="ts">
 
 import Vue from 'vue';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Inject, Prop, Watch} from 'vue-property-decorator';
 import AddTag from '@/components/addtag.vue';
 
 
@@ -43,13 +47,13 @@ type icondate = [{ name: string; text: string; type: string }]
 export default class Tag extends Vue {
 
   @Prop(Array) dataIcon: icondate | undefined;
-
-
+  @Inject() eventBus!: Vue;
 
   get IconData() {     //计算属性
     return this.dataIcon;
   }
 
+  removeIcon = false;
 
   tagDataName: string[] = [];   // 储存 svg 的 name
   tagDateText = '';            //  储存 svg 的 text
@@ -78,10 +82,19 @@ export default class Tag extends Vue {
   }
 
 
-  addTags(){
-    console.log(this)
-    this.$router.push('/AddTag')
+  addTags() {
+    console.log(this);
+    this.$router.push('/AddTag');
   }
+
+
+
+  mounted() {
+    this.eventBus.$on('update:removeIcon', (removeIcon: boolean) => {
+      return this.removeIcon = removeIcon
+    });
+  }
+
 
 }
 
@@ -119,10 +132,19 @@ export default class Tag extends Vue {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+
 
         &.selected {
           background: #FF931D;
         }
+
+        > .deleteIcon {
+          position: absolute;
+          left: 43px;
+          bottom: 36px;
+        }
+
 
         > .icon {
           font-size: 30px;
@@ -140,8 +162,6 @@ export default class Tag extends Vue {
     background: white;
     z-index: 2;
   }
-
-
 }
 
 
