@@ -5,23 +5,35 @@
 
 //  JSON.parse(JSON.stringify(data)) //使用 JSON 拷贝数据
 
+import clone from '@/lib/clone';
+import createId from '@/lib/createId';
+
 const localStoragekey = 'recordList';
 
 const recordModels = {
-  Copy(data: RecordItem | RecordItem[] ) {
-    return   JSON.parse(JSON.stringify(data));
+
+  data: [] as RecordItem [],
+
+  Copy(data: RecordItem | RecordItem[]) {
+    return clone(data);
+  },
+
+  createRecord(record: RecordItem) {
+    const recordCopy: RecordItem = clone(record);
+    recordCopy.createAt = new Date();
+    recordCopy.id = createId;
+    this.data.push(recordCopy);
   },
 
 
   read() {  //获取
-    const recordReda: RecordItem[] = JSON.parse(window.localStorage.getItem(localStoragekey) || '[]');
-    return recordReda;
+    this.data = JSON.parse(window.localStorage.getItem(localStoragekey) || '[]');
+    return this.data;
   },
 
-  save(data: RecordItem[]) {   //保存
-    window.localStorage.setItem(localStoragekey, JSON.stringify(data));
+  save() {   //保存
+    window.localStorage.setItem(localStoragekey, JSON.stringify(this.data));
   }
-
 
 };
 

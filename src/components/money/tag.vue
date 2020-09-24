@@ -2,18 +2,16 @@
   <div class="tags">
     <ul class="tags-ul">
       <li class="tag-one"
-          v-for="(icon,index) in IconData"
+          v-for="(icon,index) in dataIcon"
           :key="index"
-          @click="controls(icon)"
-      >
+          @click="controls(icon)">
         <div class="tag-icon" :class="{ selected: tagDateText ===  icon.text && 'selected' }">
           <Icon :name="icon.name"></Icon>
-          <Icon
-              name="shanchu"
-              class="deleteIcon"
-              v-if="removeIcon"
-          ></Icon>
+          <div class="deleteIcon" @click="delteIccon(icon.text)">
+            <Icon name="shanchu" v-if="removeIcon"/>
+          </div>
         </div>
+
         <div class="tag-text">
           {{ icon.text }}
         </div>
@@ -27,8 +25,6 @@
         </div>
       </li>
     </ul>
-
-
   </div>
 
 </template>
@@ -36,22 +32,41 @@
 <script lang="ts">
 
 import Vue from 'vue';
-import {Component, Inject, Prop, Watch} from 'vue-property-decorator';
+import {Component, Inject, Watch} from 'vue-property-decorator';
 import AddTag from '@/components/addtag.vue';
+import tagModel from '@/model/tagModel.ts';
 
-
-type icondate = [{ name: string; text: string; type: string }]
 @Component({
   components: {AddTag}
 })
 export default class Tag extends Vue {
 
-  @Prop(Array) dataIcon: icondate | undefined;
   @Inject() eventBus!: Vue;
 
-  get IconData() {     //计算属性
-    return this.dataIcon;
+  type = '-';
+  dataIcon: RecordItem[] = [];
+
+
+  created() {
+    if (tagModel.getSave().length === 0) {
+      tagModel.setRead();
+      console.log('1231213')
+    }
+    if (this.type === '-') {
+      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '-');
+    }
   }
+
+  mounted() {
+    this.eventBus.$on('update:removeIcon', (removeIcon: boolean) => {
+      return this.removeIcon = removeIcon;
+    });
+    this.eventBus.$on('update:type', (value: string) => {
+      this.type = value;
+      this.dataIcon = tagModel.getSave().filter((item: { type: string }) => item.type === value);
+    });
+  }
+
 
   removeIcon = false;
 
@@ -66,7 +81,6 @@ export default class Tag extends Vue {
     } else {
       const CC = this.tagDataName.indexOf(value.name);
       this.tagDataName.splice(CC - 1, 1);
-      console.log(this.tagDataName);
     }
   }
 
@@ -83,19 +97,20 @@ export default class Tag extends Vue {
 
 
   addTags() {
-    console.log(this);
     this.$router.push('/AddTag');
   }
 
 
-
-  mounted() {
-    this.eventBus.$on('update:removeIcon', (removeIcon: boolean) => {
-      return this.removeIcon = removeIcon
-    });
+  delteIccon(value: string) {
+    tagModel.removeTag(value);
+    console.log(this.type);
+    if (this.type === '-') {
+      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '-');
+    }
+    if (this.type === '+') {
+      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '+');
+    }
   }
-
-
 }
 
 
@@ -109,12 +124,12 @@ export default class Tag extends Vue {
   flex-direction: column;
   width: 90%;
   margin: auto;
+  overflow: auto;
+  height: 360px;
 
   .tags-ul {
     display: flex;
-    overflow: auto;
     flex-wrap: wrap;
-    height: 400px;
 
     > li {
       display: flex;
@@ -134,17 +149,23 @@ export default class Tag extends Vue {
         align-items: center;
         position: relative;
 
+        > .deleteIcon {
+          position: absolute;
+          left: 40px;
+          bottom: 30px;
+
+          > .icon {
+            font-size: 25px;
+            color: red;
+          }
+
+
+        }
+
 
         &.selected {
           background: #FF931D;
         }
-
-        > .deleteIcon {
-          position: absolute;
-          left: 43px;
-          bottom: 36px;
-        }
-
 
         > .icon {
           font-size: 30px;

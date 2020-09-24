@@ -1,11 +1,18 @@
 <template>
   <Layout>
-    <Type :value.sync=record.type></Type>
-    <Tag :data-icon="dataIcon" @update:Tag=onTagName @update:text=ontext></Tag>
+    <Type
+        @update:type=onType
+    ></Type>
+    <Tag
+        @update:Tag=onTagName
+        @update:text=ontext
+
+    ></Tag>
     <NotesNumber
         @update:NotesNumber=onNotesAmount
-        @submit="saveRecord"
         @update:Notes=onNotes
+        @submit="saveRecord"
+
     ></NotesNumber>
   </Layout>
 </template>
@@ -16,81 +23,63 @@ import {Component, Provide, Watch} from 'vue-property-decorator';
 import Type from '@/components/money/type.vue';
 import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
-import Notes from '@/components/money/notes.vue';
 import recordModels from '@/model/recordmodels.ts';
-import tagModel from '@/model/tagModel.ts';
 
 
 @Component({
-  components: {Type, Tag, NotesNumber, Notes,}
+  components: {Type, Tag, NotesNumber}
 })
 export default class Money extends Vue {
   @Provide() eventBus = new Vue;
 
-  dataIcon: RecordItem[] = []
 
-  created() {
-    if (this.dataIcon) {
-      tagModel.setRead();
-    }
-    this.dataIcon  = tagModel.getSave();
-  }
-
-  record: RecordItem = {
-    type: '-',
+  record: RecordItem = {    //这个是record储存初始数据
+    type: '',
     name: '',
     text: '',
     notes: '',
     amount: 0,
   };
 
-
-
-
-
-
+  //获取localStorage数据 到 recordList
   recordList: RecordItem[] = recordModels.read();
-  //localStorage 获取数据
 
-  onTagName(value: string) {
+  //localStorage 获取数据
+  onType(value: string) {
+    this.record.type = value;   //收集 type 的 -/+
+  }
+  onTagName(value: string) {     //收集svg 名字
     this.record.name = value;
   }
-
-  ontext(value: string) {
+  ontext(value: string) {      //收集 svg txt
     this.record.text = value;
   }
-
-
-  onNotes(value: string) {
+  onNotes(value: string) {    //收集备注
     this.record.notes = value;
   }
-
-  onNotesAmount(value: string) {
+  onNotesAmount(value: string) {    //收集键盘数数字
     this.record.amount = parseFloat(value);
   }
 
+
 //更新数据
   saveRecord() {
-    const recordCopy: RecordItem = recordModels.Copy(this.record);
-    recordCopy.createAt = new Date();
-    this.recordList.push(recordCopy);
+    recordModels.createRecord(this.record)
   }
 
-  //localStorage保存数据
+  //localStorage保存数据   //监控recordList
   @Watch('recordList')
   onRecordList() {
-    recordModels.save(this.recordList);
+    recordModels.save();
   }
+
+
+
 }
-
-
-
-
 
 
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-
 </style>

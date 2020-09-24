@@ -8,11 +8,19 @@ type RecordItem = {
   id?: number;
 }
 
-type  dataIconType = [{
-  type: string;
-  name: string;
-  text: string;
-}]
+
+type tagItem = {
+  dataIcon: RecordItem[];
+  setRead: () => void;
+  getSave: () => RecordItem[];
+  crateTag: (data: RecordItem) => void;
+  removeTag: (value: string) => void;
+}
 
 
+interface Window {
+  setRead: void;
+  crateTag: (add: RecordItem) => void;
+  getSave: RecordItem[];
 
+}
