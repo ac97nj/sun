@@ -158,15 +158,10 @@ export default class Tag extends Vue {
             font-size: 25px;
             color: red;
           }
-
-
         }
-
-
         &.selected {
           background: #FF931D;
         }
-
         > .icon {
           font-size: 30px;
         }
