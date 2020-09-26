@@ -21,9 +21,6 @@ export default class LabelTag extends Vue {
   type = '-'
 
 
-
-
-
 }
 
 
