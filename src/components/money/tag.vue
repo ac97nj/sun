@@ -34,7 +34,7 @@
 import Vue from 'vue';
 import {Component, Inject, Watch} from 'vue-property-decorator';
 import AddTag from '@/components/addtag.vue';
-import tagModel from '@/model/tagModel.ts';
+
 
 @Component({
   components: {AddTag}
@@ -46,14 +46,20 @@ export default class Tag extends Vue {
   type = '-';
   dataIcon: RecordItem[] = [];
 
+  get tagIcon() {
+    return this.$store.state.tagIcon;
+  }
+
 
   created() {
-    if (tagModel.getSave().length === 0) {
-      tagModel.setRead();
-      console.log('1231213')
+    this.$store.commit('getSave');
+    if (this.tagIcon.length === 0) {
+      this.$store.commit('fetchTags');
+      this.$store.commit('getSave');
+      console.log(this.tagIcon);
     }
     if (this.type === '-') {
-      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '-');
+      this.dataIcon = this.tagIcon.filter((i: { type: string }) => i.type === '-');
     }
   }
 
@@ -63,7 +69,8 @@ export default class Tag extends Vue {
     });
     this.eventBus.$on('update:type', (value: string) => {
       this.type = value;
-      this.dataIcon = tagModel.getSave().filter((item: { type: string }) => item.type === value);
+      this.$store.commit('getSave');
+      this.dataIcon = this.tagIcon.filter((item: { type: string }) => item.type === value);
     });
   }
 
@@ -102,13 +109,14 @@ export default class Tag extends Vue {
 
 
   delteIccon(value: string) {
-    tagModel.removeTag(value);
+    this.$store.commit('removeTag', value);
     console.log(this.type);
     if (this.type === '-') {
-      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '-');
+      this.$store.commit('getSave');
+      this.dataIcon = this.tagIcon.filter((i: { type: string }) => i.type === '-');
     }
     if (this.type === '+') {
-      this.dataIcon = tagModel.getSave().filter((i: { type: string }) => i.type === '+');
+      this.dataIcon = this.tagIcon.filter((i: { type: string }) => i.type === '+');
     }
   }
 }
@@ -159,9 +167,11 @@ export default class Tag extends Vue {
             color: red;
           }
         }
+
         &.selected {
           background: #FF931D;
         }
+
         > .icon {
           font-size: 30px;
         }

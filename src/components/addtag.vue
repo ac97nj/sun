@@ -46,7 +46,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagModel from '@/model/tagModel';
 
 
 @Component
@@ -55,6 +54,8 @@ export default class AddTag extends Vue {
   type = '-';  // 储存 svg 的 - / +
   addTagName: string[] = [];    //储存 svg 的 name
   inputText = '';   //储存 svg 的 text
+
+  addList: RecordItem[] = [];
 
 
   addLabels = [
@@ -66,7 +67,6 @@ export default class AddTag extends Vue {
     {name: 'yundong'},
     {name: 'pingguo'},
   ];
-
 
   created() {
     return this.control({name: 'dangao'});
@@ -96,17 +96,10 @@ export default class AddTag extends Vue {
     add.type = this.type;
     add.name = this.addTagName[0];
     add.text = this.inputText;
-    const BB = tagModel.getSave().map(item => item.text);
-    if (add.text === '') {
-      window.alert('亲,名字不可为空');
-    } else if (BB.indexOf(add.text) >= 0) {
-      window.alert('标签名字重复');
-    } else {
-      tagModel.crateTag(add);
-      // window.alert('添加成功请返回');
-      // this.$router.push('/'); => 记着修改
-      this.$router.push('/');
-    }
+    this.$store.commit('crateTag', add);
+
+
+
   }
 }
 
