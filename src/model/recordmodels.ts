@@ -8,7 +8,7 @@
 import clone from '@/lib/clone';
 import createId from '@/lib/createId';
 
-const localStoragekey = 'recordList';
+
 
 const recordModels = {
 
@@ -26,14 +26,14 @@ const recordModels = {
   },
 
 
-  read() {  //获取
-    this.data = JSON.parse(window.localStorage.getItem(localStoragekey) || '[]');
-    return this.data;
-  },
+  // read() {  //获取
+  //   this.data = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+  //   return this.data;
+  // },
 
-  save() {   //保存
-    window.localStorage.setItem(localStoragekey, JSON.stringify(this.data));
-  }
+  // save() {   //保存
+  //   window.localStorage.setItem(localStoragekey, JSON.stringify(this.data));
+  // }
 
 };
 
