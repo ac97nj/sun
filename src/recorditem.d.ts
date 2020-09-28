@@ -4,7 +4,7 @@ type RecordItem = {
   text: string;
   notes?: string;
   amount?: number;
-  createAt?: Date;
+  createAt?: string;
   id?: number;
 }
 
@@ -16,6 +16,14 @@ type tagItem = {
   crateTag: (data: RecordItem) => void;
   removeTag: (value: string) => void;
 }
+
+
+type rootState = {
+  dataIcon: RecordItem[];
+  tagIcon: RecordItem[];
+  recordData: RecordItem[];
+}
+
 
 
 interface Window {

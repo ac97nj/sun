@@ -22,11 +22,6 @@ Vue.use(Vuex);
 //   {type: '+', name: 'gupiao', text: '股票'},
 // ],
 
-type rootState = {
-  dataIcon: RecordItem[];
-  tagIcon: RecordItem[];
-  recordData: RecordItem[];
-}
 
 
 const store = new Vuex.Store({
@@ -86,7 +81,7 @@ const store = new Vuex.Store({
         window.localStorage.setItem('recordList', JSON.stringify(state.recordData));
       },
       createRecord(state, record: RecordItem) {   //创建保存
-        record.createAt = new Date();
+        record.createAt = new Date().toISOString()
         record.id = createId;
         const recordCopy: RecordItem = clone(record);
         state.recordData.push(recordCopy);

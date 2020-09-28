@@ -47,7 +47,7 @@ export default class Tag extends Vue {
   dataIcon: RecordItem[] = [];
 
   get tagIcon() {
-    return this.$store.state.tagIcon;
+    return (this.$store.state as rootState).tagIcon;
   }
 
 

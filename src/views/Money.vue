@@ -42,7 +42,7 @@ export default class Money extends Vue {
 
 
   get recordData() {
-    return this.$store.state.recordData;
+    return (this.$store.state as rootState).recordData;
   }
 
 

@@ -17,11 +17,6 @@
             100
           </div>
         </div>
-
-
-
-
-
       </li>
     </ul>
 
@@ -42,29 +37,19 @@ export default class LabelStatistics extends Vue {
 
 <style lang="scss" scoped>
 .Statistics {
-
   width: 80%;
   margin: auto;
 
   > li {
-
     > .Statistics-one {
-
       display: flex;
       justify-content: space-between;
-
     }
-
     > .Statistics-two {
       display: flex;
       justify-content: space-between;
-
     }
-
-
   }
-
-
 }
 
 
