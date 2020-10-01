@@ -23,7 +23,6 @@ Vue.use(Vuex);
 // ],
 
 
-
 const store = new Vuex.Store({
     state: {
       dataIcon: [],
@@ -81,8 +80,8 @@ const store = new Vuex.Store({
         window.localStorage.setItem('recordList', JSON.stringify(state.recordData));
       },
       createRecord(state, record: RecordItem) {   //创建保存
-        record.createAt = new Date().toISOString()
-        record.id = createId;
+        record.createAt = new Date().toISOString();
+        record.id = createId();
         const recordCopy: RecordItem = clone(record);
         state.recordData.push(recordCopy);
         window.localStorage.setItem('recordList', JSON.stringify(state.recordData));
