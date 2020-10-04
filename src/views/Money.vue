@@ -25,7 +25,6 @@ import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
 
 
-
 @Component({
   components: {Type, Tag, NotesNumber}
 })
@@ -79,7 +78,14 @@ export default class Money extends Vue {
 
 //更新数据
   saveRecord() {
-    this.$store.commit('createRecord', this.record);
+    if (this.record.name === '') {
+      window.alert('请选择类别');
+    } else  if (this.record.amount === 0) {
+      window.alert('亲,至少输入一个金额');
+    }else {
+      this.$store.commit('createRecord', this.record);
+      alert('记账成功')
+    }
   }
 
   //localStorage保存数据   //监控recordList

@@ -69,14 +69,10 @@ export default class NotesNumber extends Vue {
   }
 
   ok() {             //传送数字内容
-    if (this.output === '0') {
-      alert('亲,至少输入一个金额');
-    }
     this.$emit('update:NotesNumber', this.output);
     this.$emit('submit', this.output);
     this.output = '0';
-    this.inputValue = ''
-    alert('记账成功')
+    this.inputValue = '';
   }
 
 //备注数据

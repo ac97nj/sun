@@ -1,5 +1,4 @@
 <template>
-
   <Layout>
     statistics
   </Layout>

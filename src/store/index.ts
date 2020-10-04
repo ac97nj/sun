@@ -52,11 +52,16 @@ const store = new Vuex.Store({
           router.push('/');
         }
       },
+      crateTagTwo(state, add: RecordItem) {
+        const add2: RecordItem = JSON.parse(JSON.stringify(add));
+        store.commit('getSave');
+        state.tagIcon.push(add2);
+        window.localStorage.setItem('recordTagList', JSON.stringify(state.tagIcon));
+      },
       fetchTags() {
-        store.commit('crateTag', {type: '+', name: 'gongzi', text: '工资'},
+        store.commit('crateTagTwo', {type: '+', name: 'gongzi', text: '工资'},
         );
-        store.commit('crateTag', {type: '-', name: 'shuiguo', text: '水果'});
-
+        store.commit('crateTagTwo', {type: '-', name: 'shuiguo', text: '水果'});
       },
       removeTag(state, value) {     //删除数据localStorage
         let index = 0;
@@ -88,9 +93,19 @@ const store = new Vuex.Store({
       },
 
 
-    },
-    actions: {},
-    modules: {},
+      removeRecord(state, value: number) {
+        let index = 0;
+        store.commit('read');
+        for (let i = 0; i < state.recordData.length; i++) {
+          if (state.recordData[i].id === value) {
+            index = i;
+          }
+        }
+        console.log(index);
+        state.recordData.splice(index, 1);
+        window.localStorage.setItem('recordList', JSON.stringify(state.recordData));
+      },
+    }
   }
 );
 

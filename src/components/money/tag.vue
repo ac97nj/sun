@@ -61,6 +61,7 @@ export default class Tag extends Vue {
     if (this.type === '-') {
       this.dataIcon = this.tagIcon.filter((i: { type: string }) => i.type === '-');
     }
+
   }
 
   mounted() {

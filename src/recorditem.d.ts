@@ -9,6 +9,19 @@ type RecordItem = {
 }
 
 
+type RecordItems = {
+  type: string;
+  name: string;
+  text: string;
+  notes: string;
+  amount: number;
+  createAt?: string;
+  id: number;
+}
+
+
+
+
 type tagItem = {
   dataIcon: RecordItem[];
   setRead: () => void;
