@@ -1,6 +1,6 @@
 <template>
   <div class="type">
-    <div class="calendar">日历</div>
+    <Icon name="twosun"></Icon>
     <ul class="isType">
       <li :class="type ==='-'&& 'selected' " @click="selectType('-')">支出</li>
       <li :class="type ==='+'&& 'selected' " @click="selectType('+')">收入</li>
@@ -56,9 +56,23 @@ export default class Type extends Vue {
   justify-content: space-between;
   align-items: center;
 
+  .icon {
+    font-size: 18px;
+    width: 50px;
+    height: 35px;
+    color: #FF931D;
+    margin-left: 10px;
+    position: relative;
+
+  }
+
 
   > .isType {
     display: flex;
+
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
 
     > li {
 
@@ -83,13 +97,13 @@ export default class Type extends Vue {
   }
 
   .calendar {
-    margin-left: 10px;
-    display: flex;
     margin-right: 10px;
+    display: flex;
     height: 40px;
     width: 45px;
     justify-content: center;
     align-items: center;
+
   }
 
   .redact {
@@ -101,4 +115,6 @@ export default class Type extends Vue {
     align-items: center;
   }
 }
+
+
 </style>

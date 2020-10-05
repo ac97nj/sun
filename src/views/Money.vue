@@ -3,6 +3,7 @@
     <Type
         @update:type=onType
     ></Type>
+
     <Tag
         @update:Tag=onTagName
         @update:text=ontext
@@ -12,7 +13,7 @@
         @update:NotesNumber=onNotesAmount
         @update:Notes=onNotes
         @submit="saveRecord"
-
+        v-if="NotesNumberdata"
     ></NotesNumber>
   </Layout>
 </template>
@@ -30,6 +31,10 @@ import NotesNumber from '@/components/money/notesNumber.vue';
 })
 export default class Money extends Vue {
   @Provide() eventBus = new Vue;
+
+
+  NotesNumberdata = false;
+
 
   record: RecordItem = {    //这个是record储存初始数据
     type: '-',
@@ -57,10 +62,14 @@ export default class Money extends Vue {
   //localStorage 获取数据
   onType(value: string) {
     this.record.type = value;   //收集 type 的 -/+
+    this.NotesNumberdata = false;
+
   }
 
   onTagName(value: string) {     //收集svg 名字
     this.record.name = value;
+    this.NotesNumberdata = true;
+
   }
 
   ontext(value: string) {      //收集 svg txt
@@ -80,11 +89,11 @@ export default class Money extends Vue {
   saveRecord() {
     if (this.record.name === '') {
       window.alert('请选择类别');
-    } else  if (this.record.amount === 0) {
+    } else if (this.record.amount === 0) {
       window.alert('亲,至少输入一个金额');
-    }else {
+    } else {
       this.$store.commit('createRecord', this.record);
-      alert('记账成功')
+      alert('记账成功');
     }
   }
 
@@ -102,4 +111,21 @@ export default class Money extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+
+input {
+  //width: 50px;
+  ////background: transparent;
+  border: none;
+  //height: 50px;
+  //
+  font-size: 10px;
+  //text-indent:-9999px;
+  //white-space:nowrap;
+  //line-height:0;
+  //background: #FF931D;
+  //margin-left: 2px;
+
+}
+
+
 </style>

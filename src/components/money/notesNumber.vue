@@ -3,9 +3,9 @@
     <label class="notes">
       <span class="notes-name">备注</span>
       <input placeholder="点击写备注"
-             v-model="inputValue"
-      />
+             v-model="inputValue"/>
     </label>
+
     <div class="number-wrapper">
       <div class="number-show">{{ output }}</div>
       <div class="number-key ">
@@ -99,6 +99,8 @@ export default class NotesNumber extends Vue {
   width: 100%;
 
 
+
+
   > .notes {
     margin-top: 5px;
     display: flex;
@@ -161,4 +163,6 @@ export default class NotesNumber extends Vue {
   }
 
 }
+
+
 </style>

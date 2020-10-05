@@ -61,7 +61,23 @@ const store = new Vuex.Store({
       fetchTags() {
         store.commit('crateTagTwo', {type: '+', name: 'gongzi', text: '工资'},
         );
+        store.commit('crateTagTwo', {type: '+', name: 'gupiao', text: '股票'},
+        );
+        store.commit('crateTagTwo', {type: '+', name: 'jiangjin', text: '奖金'},
+        );
+        store.commit('crateTagTwo', {type: '+', name: 'lijing', text: '礼金'},
+        );
         store.commit('crateTagTwo', {type: '-', name: 'shuiguo', text: '水果'});
+        store.commit('crateTagTwo', {type: '-', name: 'jiaotong', text: '交通'});
+        store.commit('crateTagTwo', {type: '-', name: 'meirong', text: '美容'});
+        store.commit('crateTagTwo', {type: '-', name: 'riyong', text: '日用'});
+        store.commit('crateTagTwo', {type: '-', name: 'shiwu', text: '食物'});
+        store.commit('crateTagTwo', {type: '-', name: 'xiezi', text: '鞋子'});
+        store.commit('crateTagTwo', {type: '-', name: 'yifu', text: '衣服'});
+        store.commit('crateTagTwo', {type: '-', name: 'zaocan', text: '早餐'});
+        store.commit('crateTagTwo', {type: '-', name: 'zhusu', text: '住宿'});
+
+
       },
       removeTag(state, value) {     //删除数据localStorage
         let index = 0;
