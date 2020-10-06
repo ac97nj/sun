@@ -134,8 +134,8 @@ export default class Tag extends Vue {
   width: 90%;
   margin: auto;
   overflow: auto;
-  height: 360px;
-  border: 1px  solid;
+  height: 310px;
+
 
   .tags-ul {
     display: flex;

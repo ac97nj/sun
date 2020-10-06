@@ -14,8 +14,6 @@
     <div v-else @click="removeRecord">
       完成
     </div>
-
-
   </div>
 </template>
 
@@ -82,7 +80,6 @@ export default class LabelTag extends Vue {
       }
     }
   }
-
 
   > div {
     display: flex;

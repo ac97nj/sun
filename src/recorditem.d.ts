@@ -20,6 +20,11 @@ type RecordItems = {
 }
 
 
+type hashValue = {
+  title: string;
+  total?: number;
+  items: RecordItem[];
+}
 
 
 type tagItem = {

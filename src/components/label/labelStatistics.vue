@@ -4,7 +4,7 @@
       <li v-for="(item,index) in recordList" :key="index">
         <div class="Labels-item">
           <span> {{ beauty(item.title) }}</span>
-          <span>支出:{{ item.total }}</span>
+          <span>总计:{{ item.total }}</span>
         </div>
         <ol class="Labels-ol">
           <li v-for="group in item.items" :key="group.id" class="Statistics-group">
@@ -43,30 +43,24 @@ export default class LabelStatistics extends Vue {
 
   type = '-';
 
-
   removeRecordDate = false;
 
   mounted() {
     this.eventBus.$on('removeremoveRecord', (value: boolean) => {
-
       return this.removeRecordDate = value;
     });
   }
-
 
   beforeCreate() {
     this.$store.commit('read');
   }
 
-
   get recordData() {
     return (this.$store.state as rootState).recordData;
   }
 
-
   get recordList() {
     const recordList = this.recordData;
-    // 获取新的 List 并对时间进行排序
     this.eventBus.$on('update:type', (value: string) => {
       return this.type = value;
     });
@@ -97,10 +91,12 @@ export default class LabelStatistics extends Vue {
           hashRecord.push({title: dayjs(nweList[i].createAt).format('YYYY-MM-DD'), items: [nweList[i]]});
         }
       }
-      hashRecord.map((group) => {group.total = group.items.reduce((sum, item) => sum + item.amount!, 0);});
+      hashRecord.map((group) => {group.total = group.items.reduce((sum, item) => sum + item.amount!, 0)});
     }
     return hashRecord;
   }
+
+
   beauty(value: string) {
     if (dayjs(value).isSame(dayjs(), 'year')) {
       return dayjs(value).format('M月 DD日');

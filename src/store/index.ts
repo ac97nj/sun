@@ -67,14 +67,10 @@ const store = new Vuex.Store({
         );
         store.commit('crateTagTwo', {type: '+', name: 'lijing', text: '礼金'},
         );
-        store.commit('crateTagTwo', {type: '-', name: 'shuiguo', text: '水果'});
         store.commit('crateTagTwo', {type: '-', name: 'jiaotong', text: '交通'});
-        store.commit('crateTagTwo', {type: '-', name: 'meirong', text: '美容'});
         store.commit('crateTagTwo', {type: '-', name: 'riyong', text: '日用'});
         store.commit('crateTagTwo', {type: '-', name: 'shiwu', text: '食物'});
-        store.commit('crateTagTwo', {type: '-', name: 'xiezi', text: '鞋子'});
         store.commit('crateTagTwo', {type: '-', name: 'yifu', text: '衣服'});
-        store.commit('crateTagTwo', {type: '-', name: 'zaocan', text: '早餐'});
         store.commit('crateTagTwo', {type: '-', name: 'zhusu', text: '住宿'});
 
 
@@ -101,7 +97,7 @@ const store = new Vuex.Store({
         window.localStorage.setItem('recordList', JSON.stringify(state.recordData));
       },
       createRecord(state, record: RecordItem) {   //创建保存
-        record.createAt = new Date().toISOString();
+        // record.createAt = new Date().toISOString();
         record.id = createId();
         const recordCopy: RecordItem = clone(record);
         state.recordData.push(recordCopy);

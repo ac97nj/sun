@@ -3,7 +3,9 @@
     <Type
         @update:type=onType
     ></Type>
-
+    <TimeDate
+        @update:datevalue=onDateValue
+    />
     <Tag
         @update:Tag=onTagName
         @update:text=ontext
@@ -24,10 +26,12 @@ import {Component, Provide} from 'vue-property-decorator';
 import Type from '@/components/money/type.vue';
 import Tag from '@/components/money/tag.vue';
 import NotesNumber from '@/components/money/notesNumber.vue';
+import TimeDate from '@/components/money/timeDate.vue';
+import dayjs from 'dayjs';
 
 
 @Component({
-  components: {Type, Tag, NotesNumber}
+  components: {TimeDate, Type, Tag, NotesNumber}
 })
 export default class Money extends Vue {
   @Provide() eventBus = new Vue;
@@ -42,6 +46,7 @@ export default class Money extends Vue {
     text: '',
     notes: '',
     amount: 0,
+    createAt: dayjs(new  Date().toISOString()).format('YYYY-MM-DD')
   };
 
 
@@ -84,6 +89,10 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
 
+  onDateValue(value: string) {   //收集时间
+    this.record.createAt = value;
+  }
+
 
 //更新数据
   saveRecord() {
@@ -94,15 +103,9 @@ export default class Money extends Vue {
     } else {
       this.$store.commit('createRecord', this.record);
       alert('记账成功');
+      this.NotesNumberdata = false;
     }
   }
-
-  //localStorage保存数据   //监控recordList
-  // @Watch('recordList')
-  // onRecordList() {
-  //   recordModels.save();
-  // }
-
 
 }
 
@@ -111,21 +114,6 @@ export default class Money extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-
-input {
-  //width: 50px;
-  ////background: transparent;
-  border: none;
-  //height: 50px;
-  //
-  font-size: 10px;
-  //text-indent:-9999px;
-  //white-space:nowrap;
-  //line-height:0;
-  //background: #FF931D;
-  //margin-left: 2px;
-
-}
 
 
 </style>
