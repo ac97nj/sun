@@ -58,6 +58,9 @@ export default class TimeDate extends Vue {
       margin-left: 5px;
       color: #E97373;
       font-weight: bold;
+      -webkit-appearance:none;
+      background: none;
+      outline: none;
     }
   }
 
