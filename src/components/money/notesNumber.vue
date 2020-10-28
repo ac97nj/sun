@@ -1,11 +1,10 @@
 <template>
-  <div class="notes-number">
+  <div   id="AA"   class="notes-number" >
     <label class="notes">
       <span class="notes-name">备注</span>
       <input placeholder="点击写备注"
              v-model="inputValue"/>
     </label>
-
     <div class="number-wrapper">
       <div class="number-show">{{ output }}</div>
       <div class="number-key ">
@@ -84,6 +83,11 @@ export default class NotesNumber extends Vue {
     this.$emit('update:Notes', value);
   }
 
+  created() {
+    const XX = document.getElementById('AA');
+    console.log(XX);
+  }
+
 
 }
 
@@ -98,12 +102,15 @@ export default class NotesNumber extends Vue {
   width: 100vw;
   position: fixed;
   z-index: 1;
+
+
   > .notes {
     margin-top: 5px;
     display: flex;
-    background: #F5F5F5;
+    background: #393F4E;
     font-size: 14px;
     align-items: center;
+    color: white;
 
 
     .notes-name {
@@ -117,17 +124,18 @@ export default class NotesNumber extends Vue {
       background: transparent;
       border: none;
       padding-left: 5px;
+      color: white;
     }
-
-
   }
-
   > .number-wrapper {
     .number-show {
       font-size: 30px;
       font-family: Consolas, monospace;
       text-align: right;
       height: 45px;
+      background: #393F4E;
+      border-top: 1px solid #26292C;
+      color: white;
     }
 
     .number-key {
@@ -158,8 +166,6 @@ export default class NotesNumber extends Vue {
 
 
   }
-
 }
-
 
 </style>

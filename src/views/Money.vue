@@ -6,10 +6,9 @@
     <TimeDate
         @update:datevalue=onDateValue
     />
-    <Tag
-        @update:Tag=onTagName
-        @update:text=ontext
-
+    <Tag :class="{NotesNumberClass:NotesNumberdata === true}"
+         @update:Tag=onTagName
+         @update:text=ontext
     ></Tag>
     <NotesNumber
         @update:NotesNumber=onNotesAmount
@@ -46,7 +45,7 @@ export default class Money extends Vue {
     text: '',
     notes: '',
     amount: 0,
-    createAt: dayjs(new  Date().toISOString()).format('YYYY-MM-DD')
+    createAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')
   };
 
 
@@ -107,6 +106,7 @@ export default class Money extends Vue {
     }
   }
 
+
 }
 
 
@@ -115,5 +115,8 @@ export default class Money extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 
+.NotesNumberClass {
+  margin-bottom: 250px;
+}
 
 </style>

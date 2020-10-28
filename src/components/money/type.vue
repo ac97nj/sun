@@ -40,10 +40,7 @@ export default class Type extends Vue {
     this.eventBus.$emit('update:removeIcon', this.removeIcon);
   }
 
-
 }
-
-
 </script>
 
 <style lang="scss" scoped>
