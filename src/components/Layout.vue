@@ -22,7 +22,7 @@ export default class Layout extends Vue{
 .Layout-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 
   > .container {
     flex-grow: 1;

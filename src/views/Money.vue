@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout >
     <Type
         @update:type=onType
     ></Type>
@@ -105,10 +105,8 @@ export default class Money extends Vue {
       this.NotesNumberdata = false;
     }
   }
-
-
+  
 }
-
 
 </script>
 
@@ -118,5 +116,6 @@ export default class Money extends Vue {
 .NotesNumberClass {
   margin-bottom: 250px;
 }
+
 
 </style>

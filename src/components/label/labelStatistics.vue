@@ -1,6 +1,6 @@
 <template>
-  <div class="AAA">
-    <ol class="Labels">
+  <div class="LabelsOne">
+    <ol class="Labels" v-if="recordList.length >0 ">
       <li v-for="(item,index) in recordList" :key="index">
         <div class="Labels-item">
           <span> {{ beauty(item.title) }}</span>
@@ -27,6 +27,9 @@
       </li>
 
     </ol>
+    <div v-else class="notRecord">
+      目前没有相关记录
+    </div>
   </div>
 </template>
 
@@ -91,7 +94,7 @@ export default class LabelStatistics extends Vue {
           hashRecord.push({title: dayjs(nweList[i].createAt).format('YYYY-MM-DD'), items: [nweList[i]]});
         }
       }
-      hashRecord.map((group) => {group.total = group.items.reduce((sum, item) => sum + item.amount!, 0)});
+      hashRecord.map((group) => {group.total = group.items.reduce((sum, item) => sum + item.amount!, 0);});
     }
     return hashRecord;
   }
@@ -116,6 +119,12 @@ export default class LabelStatistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.notRecord{
+  padding: 16px;
+  text-align: center;
+}
+
+
 .Labels {
   background: #ffffff;
   padding-right: 10px;
@@ -174,7 +183,7 @@ export default class LabelStatistics extends Vue {
   }
 }
 
-.AAA {
+.LabelsOne {
   width: 95%;
   margin: auto;
   height: 90%;

@@ -35,7 +35,6 @@ export default class LabelTag extends Vue {
     this.removeRecordDate = !this.removeRecordDate;
     this.eventBus.$emit('removeremoveRecord', this.removeRecordDate);
     return   this.removeRecordDate
-
   }
 
 
